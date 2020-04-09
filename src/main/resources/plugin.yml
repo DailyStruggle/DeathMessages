@@ -1,0 +1,46 @@
+name: DeathMessages
+main: DeathMessages.DeathMessages
+version: 1.3.5
+api-version: 1.13
+author: leaf26
+website: https://github.com/DailyStruggle
+
+softdepend: [PlaceholderAPI]
+
+commands:
+    deathMsg:
+        description: death help
+        usage: |
+            /deathMsg
+    deathMsg help:
+        description: death help
+        permission: deathMsg.see
+        usage: |
+            /deathMsg help
+    deathMsg reload:
+        description: Reloads the plugin configuration files
+        permission: deathMsg.reload
+        usage: |
+            /deathMsg reload
+
+permissions:
+    deathMsg.*:
+        description: allows use of all deathMsg commands
+        default: op
+        children:
+            deathMsg.see: true
+            deathMsg.reload: true
+            deathMsg.wakeup: true
+    deathMsg.see:
+        description: can see the deathMsg help menu
+        default: false
+    deathMsg.reload: 
+        description: can reload deathMsg options
+        default: op
+    deathMsg.wakeup:
+        description: can kick from bed
+        default: true
+    deathMsg.ignore:
+        description: ignore player entirely
+        default: false
+    
