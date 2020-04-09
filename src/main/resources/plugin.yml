@@ -17,6 +17,11 @@ commands:
         permission: deathMsg.see
         usage: |
             /deathMsg help
+    deathMsg test:
+        description: test a death message
+        permission: deathMsg.test
+        usage: |
+            /deathMsg test
     deathMsg reload:
         description: Reloads the plugin configuration files
         permission: deathMsg.reload
@@ -33,12 +38,12 @@ permissions:
             deathMsg.wakeup: true
     deathMsg.see:
         description: can see the deathMsg help menu
-        default: false
+        default: true
     deathMsg.reload: 
         description: can reload deathMsg options
         default: op
-    deathMsg.wakeup:
-        description: can kick from bed
+    deathMsg.test:
+        description: can test death messages randomly or by name
         default: true
     deathMsg.ignore:
         description: ignore player entirely

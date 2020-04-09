@@ -33,22 +33,20 @@ dimensions:
     THE_END: "&f[&bend&f]"
 
 #Messages to announce on death
-#CONTACT: spigot DamageCause enum for the type of death
-#cactus001: arbitrary unique message name
+#cactusDefaultMsg: arbitrary unique message name
+#    causes: list of cases where this message can be chosen
 #    death: thing to say in chat on player death
-#    causes: list of cases where this can happen
-#    entityTypes: message can only be selected if attacking entity is of one of these types
-#    entityNames: message can only be selected if attacking entity has one of these names
 #    hover: hover text.
-#               ^Sleeper
-#    wakeup: thing to say in global chat on wakeup click
-#               ^player calling wakeup.
-#    cantWakeup: message to send if someone had sleep.bypass
-#               ^player calling wakeup
 #    chance: floating point chance to use this message, out of the sum of all chances in the chosen list
+
+#   CONTACT damage type -
+#    entityTypes: message can only be selected if attacking entity is of one of these types
+#                   https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
+#    entityNames: message can only be selected if attacking entity has one of these names
+
 messages:
     cactusDefaultMsg:
-        causes: #causes of death, based on spigot DamageCause
+        causes:
             - "CONTACT"
         death: "&f[username] was pricked to death"
         hover: "&fRIP [username]!"
@@ -56,18 +54,17 @@ messages:
     defaultAttack:
         causes: 
             - "ENTITY_ATTACK"
-        EntityTypes: #entity 
-            - "player" 
-        death: "&f[username] was slain by &c[entityDisplayName]"
+        EntityTypes:  
+            - "PLAYER" 
+        death: "&f[username] was slain by &c[entityName]"
         hover: "&fRIP [username]!"
         chance: 1.0
     ZombieAttackMsg:
         causes: 
             - "ENTITY_ATTACK"
         entityTypes: #set any entity requirements
-            - "zombie"
-        entityNames:
-            - ""
+            - "ZOMBIE"
+            - "ZOMBIE_VILLAGER"
         death: "&f[username] watched too many zombie movies"
         hover: "&fRIP [username]!"
         chance: 1.0 #chance of selection is 1.0/(1.0+1.0)

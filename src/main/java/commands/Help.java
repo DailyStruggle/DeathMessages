@@ -12,7 +12,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class Help implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(!sender.hasPermission("sleep.see")) return false;
+		if(!sender.hasPermission("deathMsg.see")) return false;
 		
 		TextComponent msg = new TextComponent(ChatColor.BLUE.toString() + "/sleep help - see this");
 		msg.setHoverEvent( new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder( "/sleep" ).create()));
