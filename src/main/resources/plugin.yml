@@ -1,6 +1,6 @@
 name: DeathMessages
-main: DeathMessages.DeathMessages
-version: 1.3.5
+main: DeathMessages.DeathMessages.DeathMessages
+version: 0.0.1
 api-version: 1.13
 author: leaf26
 website: https://github.com/DailyStruggle
@@ -9,11 +9,11 @@ softdepend: [PlaceholderAPI]
 
 commands:
     deathMsg:
-        description: death help
+        description: deathMsg help
         usage: |
             /deathMsg
     deathMsg help:
-        description: death help
+        description: deathMsg help
         permission: deathMsg.see
         usage: |
             /deathMsg help
@@ -30,7 +30,7 @@ commands:
 
 permissions:
     deathMsg.*:
-        description: allows use of all deathMsg commands
+        description: allows use of all deathMsg DeathMessages.commands
         default: op
         children:
             deathMsg.see: true
@@ -45,6 +45,9 @@ permissions:
     deathMsg.test:
         description: can test death messages randomly or by name
         default: true
+    deathMsg.defaultmessage:
+        description: can reload deathMsg options
+        default: false
     deathMsg.ignore:
         description: ignore player entirely
         default: false

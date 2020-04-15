@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bd410c14-10cd-4d52-95f1-5f5285be4fdc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_21_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__me_clip_placeholderapi_2_10_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_md_5_bungeecord_chat_1_13_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_13_2_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_23.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DeathMessages.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/DeathMessages/DeathMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/bukkitTasks/AnnounceDeath.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/bukkitTasks/OnDeathChecks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/bukkitTasks/RemoveLastEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/bukkitTasks/SendMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/commands/DeathMsg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/commands/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/events/onEntityDamage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/events/onPlayerDeath.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/tools/Metrics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/types/DamageData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/types/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/types/MessageList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DeathMessages/DeathMessages.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/Reload.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/commands/Reload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/TabComplete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/commands/TabComplete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/events/onPlayerDeath.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tools/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/tools/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tools/LocalPlaceholders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/tools/LocalPlaceholders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tools/PAPI_expansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DeathMessages/tools/PAPI_expansion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/types/Message.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1aYJ4uYDysvsFltEhQnoJjKBh50" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bd410c14-10cd-4d52-95f1-5f5285be4fdc" name="Default Changelist" comment="" />
+      <created>1586906405790</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586906405790</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="2517" height="393" key="GridCell.Tab.0.bottom" timestamp="1586912735876">
+      <screen x="2560" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="393" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.0.2560.1400@2560.0.2560.1400" timestamp="1586912735876" />
+    <state width="2517" height="393" key="GridCell.Tab.0.center" timestamp="1586912735875">
+      <screen x="2560" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="393" key="GridCell.Tab.0.center/0.0.2560.1400/2560.0.2560.1400@2560.0.2560.1400" timestamp="1586912735875" />
+    <state width="2517" height="393" key="GridCell.Tab.0.left" timestamp="1586912735875">
+      <screen x="2560" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="393" key="GridCell.Tab.0.left/0.0.2560.1400/2560.0.2560.1400@2560.0.2560.1400" timestamp="1586912735875" />
+    <state width="2517" height="393" key="GridCell.Tab.0.right" timestamp="1586912735876">
+      <screen x="2560" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="393" key="GridCell.Tab.0.right/0.0.2560.1400/2560.0.2560.1400@2560.0.2560.1400" timestamp="1586912735876" />
+    <state x="3496" y="330" key="run.anything.popup" timestamp="1586912323049">
+      <screen x="2560" y="0" width="2560" height="1400" />
+    </state>
+    <state x="3496" y="330" key="run.anything.popup/0.0.2560.1400/2560.0.2560.1400@2560.0.2560.1400" timestamp="1586912323049" />
+  </component>
+</project>

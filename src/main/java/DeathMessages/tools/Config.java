@@ -1,34 +1,35 @@
-package tools;
+package DeathMessages.tools;
+
+import DeathMessages.DeathMessages.DeathMessages;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import DeathMessages.types.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-
-import DeathMessages.DeathMessages;
-import types.Message;
+import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.*;
 
 public class Config {
 	public FileConfiguration config;
 	public FileConfiguration messages;
 	public String version;
-	
-	private Map<DamageCause,ArrayList<Message>> dmgMessages; //message list for each cause of death
-	private Map<DamageCause,ArrayList<Double>> chanceRanges; // matching chance ranges for the message lists
-	
+	public List<String> messageNames;
+
+	private Map<DamageCause, MessageList> dmgMessages; //message list for each cause of death
+
 	private DeathMessages plugin;
 	
-	private Boolean hasPAPI;
+	private Boolean hasPAPI = false;
 	
 	public Config(DeathMessages plugin) {
 		this.plugin = plugin;
@@ -38,55 +39,106 @@ public class Config {
 	
 	
 	public void refreshConfigs() {
+		this.messageNames = new ArrayList<String>();
+		this.dmgMessages = new HashMap<DamageCause, MessageList>();
 		this.hasPAPI = false;
+
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			this.hasPAPI = true;
 		}
 		
 		//load config.yml file
 		File f = new File(this.plugin.getDataFolder(), "config.yml");
-		if(f.exists())
-			this.config = YamlConfiguration.loadConfiguration(f);
-		else
-		{
+		if(!f.exists()) {
 			plugin.saveResource("config.yml", false);
-			this.config = YamlConfiguration.loadConfiguration(f);
 		}
-		
+		this.config = YamlConfiguration.loadConfiguration(f);
+
 		//load messages.yml file
 		f = new File(this.plugin.getDataFolder(), "messages.yml");
-		if(f.exists())
-			this.messages = YamlConfiguration.loadConfiguration(f);
-		else
-		{
+		if(!f.exists()) {
 			plugin.saveResource("messages.yml", false);
-			this.messages = YamlConfiguration.loadConfiguration(f);
 		}
-		
+		this.messages = YamlConfiguration.loadConfiguration(f);
+
 		if( 	(this.messages.getDouble("version") < 1.0) ) {
-			Bukkit.getConsoleSender().sendMessage("§b[OnePlayerSleep] old messages.yml detected. Getting a newer version");
+			Bukkit.getConsoleSender().sendMessage("ï¿½b[deathMsg] old messages.yml detected. Getting a newer version");
 			this.renameFileInPluginDir("messages.yml","messages.old.yml");
 			
 			this.plugin.saveResource("messages.yml", false);
 			this.messages = YamlConfiguration.loadConfiguration(f);
 		}
 		if( 	(this.config.getDouble("version") < 1.0) ) {
-			Bukkit.getConsoleSender().sendMessage("§b[OnePlayerSleep] old config.yml detected. Updating");
+			Bukkit.getConsoleSender().sendMessage("ï¿½b[deathMsg] old config.yml detected. Updating");
 			
 			updateConfig();
 			
 			f = new File(this.plugin.getDataFolder(), "config.yml");
 			this.config = YamlConfiguration.loadConfiguration(f);
 		}
+
+		Set<String> allMessageNames = this.messages.getConfigurationSection("messages").getKeys(false);
+		for(String messageName : allMessageNames){
+			this.messageNames.add(messageName);
+			ConfigurationSection message = this.messages.getConfigurationSection("messages").getConfigurationSection(messageName);
+			List<String> causes = message.getStringList("causes");
+			HashSet<String> types;
+			if(message.contains("entityTypes")) {
+				types = new HashSet<String>(message.getStringList("entityTypes"));
+			} else types = null;
+
+			HashSet<String> names;
+			if(message.contains("entityNames")) {
+				names = new HashSet<String>(message.getStringList("entityNames"));
+			} else names = null;
+
+			String death = message.getString("death");
+			String hover = message.getString("hover");
+
+			Double chance = message.getDouble("chance");
+
+			for(String cause : causes){
+				DamageCause damageCause = valueOf(cause);
+				if(!this.dmgMessages.containsKey(damageCause)){
+					this.dmgMessages.put(damageCause,new MessageList());
+				}
+				if(types != null && names != null) {
+					this.dmgMessages.get(damageCause).put(new Message(death,hover,types,names,chance));
+				}
+				else if (types != null && names == null) {
+					this.dmgMessages.get(damageCause).put(new Message(death,hover,types,chance));
+				}
+				else if (types == null && names == null) {
+					this.dmgMessages.get(damageCause).put(new Message(death,hover,chance));
+				}
+			}
+		}
 	}
 	
 	public Boolean hasPAPI() {
 		return this.hasPAPI;
 	}
-	
-	public Message pickRandomMessage() {
-		
+
+	public Message pickRandomMessage( Player player) {
+		DamageCause cause = null;
+		String entityName = null;
+		EntityType entityType = null;
+		if(player.getLastDamageCause() != null) {
+			cause = player.getLastDamageCause().getCause();
+			entityName = player.getLastDamageCause().getEntity().getName();
+			entityType = player.getLastDamageCause().getEntityType();
+		}
+
+
+		//pick a message from a subset of damage causes
+
 		return null;
+	}
+
+	public Message getMessage(String name, Player player) {
+		Message res;
+		ConfigurationSection msg = this.messages.getConfigurationSection("messages").getConfigurationSection(name);
+		return new Message(msg.getString("death"), msg.getString("hover"), msg.getDouble("chance"));
 	}
 	
 	//update config files based on version number
@@ -111,7 +163,7 @@ public class Config {
 		for (String line : linesInDefaultConfig) {
 			String newline = line;
 			if (line.startsWith("version:")) {
-				newline = "version: 1.4";
+				newline = "version: 1.0";
 			} else {
 				for (String node : oldValues.keySet()) {
 					if (line.startsWith(node + ":")) {

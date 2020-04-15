@@ -1,58 +1,15 @@
-worlds:
-    #whether to show message to other players
-    # other players will not be able to steal the stuff, though 
-    globalMsg: true
+#whether to show message to other players
+# other players will not be able to steal the stuff, though 
+globalMsg: true
 
-    #whether to show message to players in other worlds, not considering _nether and _the_end variants
-    doOtherWorlds: false
+#whether to show message to players in other worlds, not considering _nether and _the_end variants
+doOtherWorlds: false
 
-    #whether to show messages to players in other dimensions of the same world
-    doOtherDimensions: false
+#whether to show messages to players in other dimensions of the same world
+doOtherDimensions: false
 
-#what to do when a player clicks on the death message
-click:
-    grave:
-        #show message response, probably including coordinates
-        showGraveMsg: true
-        
-        #store items in a chest to prevent item clear
-        doGraveChest: false
-        
-        #whether to let other players get into the chest
-        publicAccess: false
-        
-        #how long before breaking the chest, in secodns
-        graveTimer: 300
-        
-    experience:
-        #disable xp drop to put it in the msg
-        recoverXp: false
-        
-        #whether to use a custom xp equation
-        #   xp = [xpAmt] * ( ( xp on death ) ^ ( [Exponent] ) )
-        #   if xp is not recovered by keepinventory, this amount is dropped
-        modifyXP: true
-        
-        #percentage of XP to recover
-        # try not to set higher than 1.00
-        xpAmt: 0.5
-        
-        #decrease return amount as exp increases
-        # for example: 0.50 * ( ( 1395 )^(0.8) ) ~= 164 -> level 30 becomes level 10
-        Exponent: 0.8
-        
-    items:
-        #disable item drops to put it in the message for some reason
-        recoverItems: false
-        
-        #switch from blacklist to whitelist
-        doWhitelist: false
-        
-        # list of items to never/only drop or return on death
-        items:
-            - "BARRIER"
-            - "COMMAND_BLOCK"
-            - "BEDROCK"
+#how long since last entity damage to consider 'in combat'
+combatTime: 5
 
 #DO NOT TOUCH VERSION NUMBER
-version: 1.4
+version: 1.0

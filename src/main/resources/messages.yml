@@ -1,11 +1,15 @@
 #default placeholders:
 #[username] - player doing the thing, using username
 #[displayname] - player doing the thing, using displayname
+#[player_x]
+#[player_y]
+#[player_z]
 #[entityType] - type of entity that killed the player
-#[entityName] - name of entity that killed the player
-#[entityDisplayName] - name of entity that killed the player
+#[killerName] - name of entity that killed the player, substitutes "[entityType]" if not named
+#[killerDisplayName] - name of entity that killed the player
 #[world] - world the player is in, minus the dimension substring
 #[dimension] - dimension the player is in
+#[escape] - put this where the escape text needs to go
 
 #useful PAPI placeholders:
 #   %player_name% 
@@ -22,6 +26,8 @@
 #   
 #   %vault_prefix% (requires vault)
 
+badArgs: "&cinvalid deathMsg command arguments"
+
 #world placeholders
 worlds:
     world: "&aworld"
@@ -32,47 +38,86 @@ dimensions:
     NETHER: "&f[&cnether&f]"
     THE_END: "&f[&bend&f]"
 
+#entity type placeholders
+# otherwise uses the default entity name
+entityTypes:
+    ZOMBIE: "a &azombie"
+    ZOMBIE_VILLAGER: "a &azombie villager"
+    SKELETON: "a &fskeleton"
+    SPIDER: "a &8spider"
+    CAVE_SPIDER: "a &8cave spider"
+    BLAZE: "a &eblaze"
+    WITHER_SKELETON: "a &7wither skeleton"
+    WITHER: "the &0Wither"
+    ENDER_DRAGON: "the &0Ender Dragon"
+
 #Messages to announce on death
 #cactusDefaultMsg: arbitrary unique message name
 #    causes: list of cases where this message can be chosen
 #    death: thing to say in chat on player death
-#    hover: hover text.
-#    chance: floating point chance to use this message, out of the sum of all chances in the chosen list
+#    escaping: if player died while in combat, add this text
+#    hover: hover text for the player that died
+#    chance: floating point chance to use this message, out of the sum of all chances for the same context
 
 #   CONTACT damage type -
-#    entityTypes: message can only be selected if attacking entity is of one of these types
+#    entityTypes: message can only be selected if attacking entity is of one of these DeathMessages.types
 #                   https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
 #    entityNames: message can only be selected if attacking entity has one of these names
 
 messages:
-    cactusDefaultMsg:
+    defaultCactus:
         causes:
             - "CONTACT"
-        death: "&f[username] was pricked to death"
-        hover: "&fRIP [username]!"
+        death: "&f[username] was pricked to death [escape]"
+        escaping: "while fighting [entityName]"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
         chance: 1.0
     defaultAttack:
         causes: 
             - "ENTITY_ATTACK"
-        EntityTypes:  
-            - "PLAYER" 
-        death: "&f[username] was slain by &c[entityName]"
-        hover: "&fRIP [username]!"
+        death: "&f[username] was slain by [killerName]"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
         chance: 1.0
-    ZombieAttackMsg:
+    ZombieAttack01:
         causes: 
             - "ENTITY_ATTACK"
-        entityTypes: #set any entity requirements
+        entityTypes: #set any entity requirements, default is all entities
+            - "ZOMBIE"
+            - "zombie_villager"
+        death: "&f[username] watched too many &azombie &fmovies"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
+        chance: 1.0
+    ZombieAttack02:
+        causes:
+            - "ENTITY_ATTACK"
+        entityTypes: 
             - "ZOMBIE"
             - "ZOMBIE_VILLAGER"
-        death: "&f[username] watched too many zombie movies"
-        hover: "&fRIP [username]!"
-        chance: 1.0 #chance of selection is 1.0/(1.0+1.0)
-    cactusMsg2: #name of message is arbitrary
+        entityNames:
+            - "Fred"
+        death: "&f[username] became [killerName]'s &asnack"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
+        chance: 1.0
+    ZombieAttack03:
+        causes:
+            - "ENTITY_ATTACK"
+        entityTypes: 
+            - "ZOMBIE"
+            - "ZOMBIE_VILLAGER"
+        death: "&f[username] joined the &ahoard"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
+        chance: 1.0
+    missedGround:
+        causes:
+            - "FALL"
+        death: "&b[username] &fmissed the ground"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
+        chance: 1.0
+    cactusMsg2: 
         causes: 
             - "CONTACT"
         death: "&b[username] &ddrank cactus juice"
-        hover: "&ethe quenchiest!"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
         chance: 1.0 
     
 #DO NOT TOUCH VERSION NUMBER
