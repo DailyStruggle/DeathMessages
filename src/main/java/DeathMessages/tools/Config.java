@@ -1,6 +1,8 @@
 package DeathMessages.tools;
 
 import DeathMessages.DeathMessages.DeathMessages;
+import DeathMessages.types.Message;
+import DeathMessages.types.MessageList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -8,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import DeathMessages.types.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 
-import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.*;
+import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.valueOf;
 
 public class Config {
 	public FileConfiguration config;
@@ -93,6 +95,7 @@ public class Config {
 			} else names = null;
 
 			String death = message.getString("death");
+			String combat = message.getString("combat");
 			String hover = message.getString("hover");
 
 			Double chance = message.getDouble("chance");
@@ -109,7 +112,7 @@ public class Config {
 					this.dmgMessages.get(damageCause).put(new Message(death,hover,types,chance));
 				}
 				else if (types == null && names == null) {
-					this.dmgMessages.get(damageCause).put(new Message(death,hover,chance));
+					this.dmgMessages.get(damageCause).put(new Message(death,combat,hover,chance));
 				}
 			}
 		}
@@ -119,26 +122,14 @@ public class Config {
 		return this.hasPAPI;
 	}
 
-	public Message pickRandomMessage( Player player) {
-		DamageCause cause = null;
-		String entityName = null;
-		EntityType entityType = null;
-		if(player.getLastDamageCause() != null) {
-			cause = player.getLastDamageCause().getCause();
-			entityName = player.getLastDamageCause().getEntity().getName();
-			entityType = player.getLastDamageCause().getEntityType();
-		}
-
-
+	public Message pickRandomMessage(DamageCause cause, @Nullable EntityType type, @Nullable String EntityName) {
+		return this.dmgMessages.get(cause).getRandom(type,EntityName);
 		//pick a message from a subset of damage causes
-
-		return null;
 	}
 
-	public Message getMessage(String name, Player player) {
-		Message res;
+	public Message getMessage(String name) {
 		ConfigurationSection msg = this.messages.getConfigurationSection("messages").getConfigurationSection(name);
-		return new Message(msg.getString("death"), msg.getString("hover"), msg.getDouble("chance"));
+		return new Message(msg.getString("death"),msg.getString("combat"), msg.getString("hover"), msg.getDouble("chance"));
 	}
 	
 	//update config files based on version number

@@ -1,11 +1,14 @@
 package DeathMessages.events;
 
 import DeathMessages.DeathMessages.DeathMessages;
+import DeathMessages.bukkitTasks.OnDeathChecks;
+import DeathMessages.types.DamageData;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import DeathMessages.types.DamageData;
-import DeathMessages.types.Message;
 
 public class onPlayerDeath implements Listener {
 	private DeathMessages plugin;
@@ -17,22 +20,20 @@ public class onPlayerDeath implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		if(event.getEntity().hasPermission("deathMsg.defaultMessage")) return;
-		if(event.getEntity().hasPermission("deathMsg.ignore")) {
-			event.setDeathMessage("");
-			return;
+		//event.setDeathMessage("");
+		switch(event.getEntity().getLastDamageCause().getCause()){
+			case ENTITY_ATTACK:
+			case ENTITY_EXPLOSION:
+			case ENTITY_SWEEP_ATTACK:
+			case THORNS:
+			case PROJECTILE:
+			{
+				break;
+			}
+			default:
+			{
+				new OnDeathChecks(this.plugin, (Player)event.getEntity(), event.getEntity().getLastDamageCause().getCause()).runTaskAsynchronously(this.plugin);
+			}
 		}
-		String cause = event.getEntity().getPlayer().getLastDamageCause().getCause().toString();
-
-		Long time = System.currentTimeMillis();
-
-		DamageData lastCombat = this.plugin.getLastEntityDamageData(event.getEntity());
-
-		Boolean inCombat = ( (lastCombat != null) && time < lastCombat.time + ( this.plugin.getPluginConfig().config.getLong("combatTime", 5)*1000 ) );
-
-		Message msg = this.plugin.getPluginConfig().pickRandomMessage( event.getEntity() );
-
-
-
-		this.plugin.setLastDeathData(event.getEntity(), new DamageData(event.getEntity().getLastDamageCause().getEntity(),event.getEntity()));
 	}
 }

@@ -1,12 +1,18 @@
 package DeathMessages.DeathMessages;
 
 import DeathMessages.commands.*;
-import DeathMessages.events.*;
-import DeathMessages.tools.*;
-import DeathMessages.types.*;
+import DeathMessages.events.onEntityDamage;
+import DeathMessages.events.onPlayerDeath;
+import DeathMessages.tools.Config;
+import DeathMessages.tools.Metrics;
+import DeathMessages.tools.PAPI_expansion;
+import DeathMessages.types.DamageData;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +29,8 @@ public class DeathMessages extends JavaPlugin implements Listener{
 		this.config.refreshConfigs();
 
 		lastDeathData = new HashMap<Player, DamageData>();
+		lastEntityDamageData = new HashMap<Player, DamageData>();
+
 
 		getCommand("deathMsg").setExecutor(new DeathMsg(this));
 		getCommand("deathMsg help").setExecutor(new Help());
@@ -62,12 +70,12 @@ public class DeathMessages extends JavaPlugin implements Listener{
 	}
 
 	public DamageData getLastEntityDamageData(Player p ) {
-		if(this.lastDeathData.containsKey(p)) return this.lastDeathData.get(p);
-		return null;
+		if(this.lastEntityDamageData.containsKey(p)) return this.lastEntityDamageData.get(p);
+		else return null;
 	}
 
-	public void setLastEntityDamageData( Player p, DamageData d ) {
-		if(this.lastDeathData.containsKey(p)) this.lastDeathData.remove(p);
-		if(d != null) this.lastDeathData.put(p,d);
+	public void setLastEntityDamageData( Player p, @Nullable DamageData d ) {
+		this.lastEntityDamageData.remove(p);
+		this.lastEntityDamageData.put(p,d);
 	}
 }

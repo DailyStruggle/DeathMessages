@@ -1,6 +1,9 @@
 package DeathMessages.types;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,28 +47,31 @@ public class MessageList extends HashMap<Integer,Message>{
 
             if(m.types != null){
                 for (String type : m.types){
-                    this.nameLookup.putIfAbsent(type, new HashSet<Integer>());
-                    this.nameLookup.get(type).add(idx);
+                    EntityType type1 = EntityType.valueOf(type);
+                    this.typeLookup.putIfAbsent(type1, new HashSet<Integer>());
+                    this.typeLookup.get(type1).add(idx);
                 }
             }
         }
     }
 
-    public Message getRandom(EntityType type, String name) {
+    public Message getRandom(@Nullable EntityType type, @Nullable String name) {
         if(this.size() == 0) return null;
         if(this.size() == 1) return this.get(0);
 
         MessageList messageList = this.reduceMessageList(type,name);
+        if(messageList.size() == 0) return null;
+        if(messageList.size() == 1) return messageList.get(0);
 
         Double r = new Random().nextDouble() * this.chanceRanges.get(this.chanceRanges.size()-1)[1];
         Integer high = this.chanceRanges.size()-1;
         Integer low = 0;
-        Integer idx = (high-low)/2;
-        while(true){
-            if(r > messageList.chanceRanges.get(idx)[1]) high = idx;
-            else if(r <= messageList.chanceRanges.get(idx)[0]) low = idx;
+        Integer idx = high - ((high-low)/2 + low);
+        for(Integer i = 0; i<messageList.size(); i++){
+            if(r > messageList.chanceRanges.get(idx)[1]) low = idx;
+            else if(r <= messageList.chanceRanges.get(idx)[0]) high = idx;
             else break;
-            idx = (high-low)/2 + low;
+            idx = (high - low) / 2 + low;
         }
         return this.get(idx);
     }
@@ -73,30 +79,32 @@ public class MessageList extends HashMap<Integer,Message>{
     private MessageList reduceMessageList(){
         MessageList res = new MessageList();
 
+        Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "reducing message list");
         for(Integer idx : this.keySet()){
-            if(this.get(idx).names.size() > 0) continue;
-            if(this.get(idx).types.size() > 0) continue;
-            res.put(idx, this.get(idx));
+            if(this.get(idx).names != null && this.get(idx).names.size() > 0) continue;
+            if(this.get(idx).types != null && this.get(idx).types.size() > 0) continue;
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "adding message " + idx);
+            res.put(this.get(idx));
         }
 
         return res;
     }
 
-    private MessageList reduceMessageList(EntityType type){
+    private MessageList reduceMessageList(@Nullable EntityType type){
         //if mob type isn't in any message requirement, get all the untyped messages
         if(type == null || !this.typeLookup.containsKey(type)) return this.reduceMessageList();
 
         MessageList res = new MessageList();
 
+        Integer i = 0;
         for (Integer idx : this.typeLookup.get(type)) {
-            if (this.get(idx).names.size() > 0) continue;
-            res.putIfAbsent(idx, this.get(idx));
+            if (this.get(idx).names == null || this.get(idx).names.size() == 0) res.put(this.get(idx));
         }
 
         return res;
     }
 
-    private MessageList reduceMessageList(EntityType type, String name){
+    private MessageList reduceMessageList(@Nullable EntityType type, @Nullable String name){
         //if this mob name isn't in any message requirement, filter only by type
         if(name == null || !this.nameLookup.containsKey(name)) return this.reduceMessageList(type);
 
@@ -104,7 +112,7 @@ public class MessageList extends HashMap<Integer,Message>{
 
         for (Integer idx : this.nameLookup.get(name)) {
             if(!this.typeLookup.containsKey(idx) || !this.typeLookup.get(idx).contains(name)) continue;
-            res.putIfAbsent(idx, this.get(idx));
+            res.put(this.get(idx));
         }
 
         return res;

@@ -1,6 +1,7 @@
 package DeathMessages.commands;
 
 import DeathMessages.DeathMessages.DeathMessages;
+import DeathMessages.tools.Config;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,7 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import DeathMessages.tools.Config;
 
 public class Reload implements CommandExecutor {
 	private DeathMessages plugin;

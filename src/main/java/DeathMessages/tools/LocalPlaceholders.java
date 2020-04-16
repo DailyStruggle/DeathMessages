@@ -1,12 +1,18 @@
 package DeathMessages.tools;
 
+import DeathMessages.DeathMessages.DeathMessages;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 public class LocalPlaceholders {
-	public static String fillPlaceHolders(String in, Player player, Config config) {
+	public static String fillPlaceHolders(String in, Player player, DeathMessages plugin) {
+		Config config = plugin.getPluginConfig();
 		ConfigurationSection worlds = config.messages.getConfigurationSection("worlds");
+		ConfigurationSection entityTypes = config.messages.getConfigurationSection("entityTypes");
 		String worldName = player.getWorld().getName().replace("_nether","").replace("the_end","");
 		if(!worlds.contains(worldName)) {
 			worlds.set(worldName, "&a" + worldName);
@@ -15,23 +21,59 @@ public class LocalPlaceholders {
 
 		String dimStr = config.messages.getConfigurationSection("dimensions").getString(player.getWorld().getEnvironment().name());
 
-		if(in.isEmpty()) return in;
 		String res = in;
 		res = res.replace("[username]", player.getName());
 		res = res.replace("[displayname]", player.getDisplayName());
+		res = res.replace("[player_x]", ((Integer)player.getLocation().getBlockX()).toString());
+		res = res.replace("[player_y]", ((Integer)player.getLocation().getBlockY()).toString());
+		res = res.replace("[player_z]", ((Integer)player.getLocation().getBlockZ()).toString());
 		if(worldName != null) res = res.replace("[world]", worldName.replace("_nether","").replace("_the_end",""));
 		if(dimStr!=null) res = res.replace("[dimension]", dimStr);
+
+		res = res.replace("[combat]","");
+
 		res = LocalPlaceholders.fillColorCodes(res);
 		return res;
 	}
 
-	public static String fillPlaceHolders(String in, String username, String displayname, String worldname, String dimensionname) {
-		if(in.isEmpty()) return in;
+	public static String fillPlaceHolders(String in, Player player, Entity killer, DeathMessages plugin) {
+		Config config = plugin.getPluginConfig();
+		ConfigurationSection worlds = config.messages.getConfigurationSection("worlds");
+		ConfigurationSection entityTypes = config.messages.getConfigurationSection("entityTypes");
+		String worldName = player.getWorld().getName().replace("_nether","").replace("the_end","");
+		String entityType = killer.getType().toString();
+		if(!worlds.contains(worldName)) {
+			worlds.set(worldName, "&a" + worldName);
+		}
+		if(!entityTypes.contains(entityType)) {
+			entityTypes.set(entityType, "&fa " + entityType);
+		}
+		worldName = worlds.getString(worldName);
+		entityType = entityTypes.getString(entityType);
+
+		String dimStr = config.messages.getConfigurationSection("dimensions").getString(player.getWorld().getEnvironment().name());
+
 		String res = in;
-		res = res.replace("[username]", username);
-		res = res.replace("[displayname]", displayname);
-		if(worldname != null) res = res.replace("[world]", worldname.replace("_nether","").replace("_the_end",""));
-		if(dimensionname!=null) res = res.replace("[dimension]", dimensionname);
+		res = res.replace("[username]", player.getName());
+		res = res.replace("[displayname]", player.getDisplayName());
+		res = res.replace("[player_x]", ((Integer)player.getLocation().getBlockX()).toString());
+		res = res.replace("[player_y]", ((Integer)player.getLocation().getBlockY()).toString());
+		res = res.replace("[player_z]", ((Integer)player.getLocation().getBlockZ()).toString());
+		if(worldName != null) res = res.replace("[world]", worldName.replace("_nether","").replace("_the_end",""));
+		if(dimStr!=null) res = res.replace("[dimension]", dimStr);
+
+		if(killer instanceof  Player){
+			Player k = (Player) killer;
+			res = res.replace("[killerType]", entityType);
+			res = res.replace("[killerName]", k.getName());
+			res = res.replace("[killerDisplayName]", k.getDisplayName());
+		}else{
+			res = res.replace("[killerType]", entityType);
+			if(killer.getName() != null)res = res.replace("[killerName]", killer.getName());
+			else res = res.replace("killerName",entityType);
+			res = res.replace("[killerDisplayName]", killer.getCustomName());
+		}
+
 		res = LocalPlaceholders.fillColorCodes(res);
 		return res;
 	}

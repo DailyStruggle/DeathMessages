@@ -4,7 +4,6 @@ import DeathMessages.DeathMessages.DeathMessages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import DeathMessages.tools.Config;
 
 import java.util.HashMap;
 import java.util.Map;

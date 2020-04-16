@@ -1,10 +1,10 @@
 package DeathMessages.commands;
 
+import DeathMessages.tools.Config;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
-import DeathMessages.tools.Config;
 
 import java.util.ArrayList;
 import java.util.HashMap;

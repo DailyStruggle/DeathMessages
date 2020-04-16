@@ -1,11 +1,10 @@
 package DeathMessages.tools;
 
+import DeathMessages.DeathMessages.DeathMessages;
+import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-
-import DeathMessages.DeathMessages.DeathMessages;
-import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PAPI_expansion extends PlaceholderExpansion{
 	private DeathMessages plugin;

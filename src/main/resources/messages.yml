@@ -9,7 +9,7 @@
 #[killerDisplayName] - name of entity that killed the player
 #[world] - world the player is in, minus the dimension substring
 #[dimension] - dimension the player is in
-#[escape] - put this where the escape text needs to go
+#[combat] - put this where the combat text needs to go
 
 #useful PAPI placeholders:
 #   %player_name% 
@@ -55,27 +55,41 @@ entityTypes:
 #cactusDefaultMsg: arbitrary unique message name
 #    causes: list of cases where this message can be chosen
 #    death: thing to say in chat on player death
-#    escaping: if player died while in combat, add this text
+#    combat: if player died while in combat, add this text
 #    hover: hover text for the player that died
 #    chance: floating point chance to use this message, out of the sum of all chances for the same context
 
 #   CONTACT damage type -
 #    entityTypes: message can only be selected if attacking entity is of one of these DeathMessages.types
 #                   https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html
-#    entityNames: message can only be selected if attacking entity has one of these names
+#    killerNames: message can only be selected if attacking entity has one of these names
 
 messages:
     defaultCactus:
         causes:
             - "CONTACT"
-        death: "&f[username] was pricked to death [escape]"
-        escaping: "while fighting [entityName]"
+        death: "&f[username] was pricked to death [combat]"
+        combat: "while fighting [killerName]"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
+        chance: 1.0
+    cactusMsg2:
+        causes:
+            - "CONTACT"
+        death: "&b[username] &ddrank cactus juice [combat]"
+        combat: "while fighting [killerName]"
         hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
         chance: 1.0
     defaultAttack:
         causes: 
             - "ENTITY_ATTACK"
         death: "&f[username] was slain by [killerName]"
+        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
+        chance: 1.0
+    missedGround:
+        causes:
+            - "FALL"
+        death: "&b[username] &fmissed the ground"
+        combat: "while fighting [killerName]"
         hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
         chance: 1.0
     ZombieAttack01:
@@ -93,7 +107,7 @@ messages:
         entityTypes: 
             - "ZOMBIE"
             - "ZOMBIE_VILLAGER"
-        entityNames:
+        killerNames:
             - "Fred"
         death: "&f[username] became [killerName]'s &asnack"
         hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
@@ -107,18 +121,6 @@ messages:
         death: "&f[username] joined the &ahoard"
         hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
         chance: 1.0
-    missedGround:
-        causes:
-            - "FALL"
-        death: "&b[username] &fmissed the ground"
-        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
-        chance: 1.0
-    cactusMsg2: 
-        causes: 
-            - "CONTACT"
-        death: "&b[username] &ddrank cactus juice"
-        hover: "[world] [dimension] &ex:[player_x]   y:[player_y]  z:[player_x]"
-        chance: 1.0 
     
 #DO NOT TOUCH VERSION NUMBER
-version: 1.4
+version: 1.0
